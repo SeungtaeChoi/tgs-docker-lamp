@@ -1,0 +1,23 @@
+web:
+   build: ./app
+   restart: always
+   environment:
+     - ALLOW_OVERRIDE=true
+   ports:
+     - "8080:80"
+   links:
+     - db
+   volumes:
+     - ./app:/var/www/html/
+db:
+  image: mariadb
+  restart: always
+  volumes:
+    - ./mysql:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: test
+    MYSQL_DATABASE: dbconfig
+  ports:
+    - "8881:3306"
